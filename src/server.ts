@@ -4,13 +4,24 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import errorMiddleware from "./middlewares/error.middleware";
 
-class Server {
+export default class Server {
     public app: Express = express();
 
     constructor(controllers: Controller[]) {
         this.init();
-
         this.useControllers(controllers);
+        this.connectDatabase().then(() => console.log("database is connected"));
+        this.useErrorMiddleware();
+    }
+
+    private useErrorMiddleware() {
+        this.app.use(errorMiddleware);
+    }
+
+    private connectDatabase() {
+        const databaseURL = process.env.DATABASE_URL;
+        const connection = mongoose.connect(databaseURL);
+        return connection;
     }
 
     private useControllers(controllers: Controller[]) {
@@ -19,19 +30,16 @@ class Server {
         );
     }
 
-    private connectDatabase() {
-        const databaseURL = process.env.DATABASE_URL;
-        if (!databaseURL) {
-            console.log("Please, provide database url to connect database");
-            return;
-        }
-        mongoose.connect(databaseURL);
-    }
-
     private init() {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
+    }
 
-        this.app.use(errorMiddleware);
+    public start() {
+        const port = process.env.PORT;
+
+        this.app.listen(port, () => {
+            console.log("server is running on port: " + port);
+        });
     }
 }

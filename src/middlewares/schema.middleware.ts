@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import ValidationException from "../exceptions/validation.exception";
+import ValidationException from "../exceptions/ValidationException";
 import Joi from "joi";
 
 const schemaMiddleware =

@@ -1,4 +1,4 @@
-import HttpException from "./http.exception";
+import HttpException from "./HttpException";
 
 export default class ValidationException extends HttpException {
     constructor(message: string) {
