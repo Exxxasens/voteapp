@@ -6,6 +6,13 @@ declare global {
             TOKEN_SECRET: string;
         }
     }
+    namespace Express {
+        export interface Request {
+            user: {
+                username: string;
+            };
+        }
+    }
 }
 
 export {};

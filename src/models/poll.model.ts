@@ -14,6 +14,21 @@ const PollSchema = new mongoose.Schema<PollDto>(
                 correct: String,
             },
         ],
+        votes: [
+            {
+                user: {
+                    type: String,
+                    required: true,
+                },
+                answers: [String],
+                correct: Number,
+            },
+        ],
+        rating: {
+            type: Number,
+            required: true,
+            default: 0,
+        },
     },
     {
         timestamps: true,
@@ -33,6 +48,7 @@ PollSchema.set("toJSON", {
         ret.questions.forEach(
             (item: { correct?: string }) => delete item.correct
         );
+        delete ret.votes;
         return ret;
     },
 });

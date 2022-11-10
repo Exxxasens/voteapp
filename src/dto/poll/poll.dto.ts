@@ -8,8 +8,10 @@ export default interface PollDto {
         options: string[];
         correct: string;
     }[];
-    stats: {
-        colmplete: number;
+    votes: {
+        user: string;
+        answers: string;
         correct: number;
-    };
+    }[];
+    rating: number;
 }

@@ -4,6 +4,9 @@ declare global {
         options: string[];
         correct: string;
     }
+    interface User {
+        username: string;
+    }
 }
 
 export {};
